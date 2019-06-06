@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'Button.dart';
+import 'MaterialAppBar.dart';
 
 class MyAppBar extends StatelessWidget {
   MyAppBar({this.title});
@@ -61,51 +63,17 @@ class MyScaffold extends StatelessWidget {
 
 }
 
-class MaterialAppBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          tooltip: 'Menu',
-          onPressed: null,
-        ),
-        title: Text('Material'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            tooltip: 'Search',
-            onPressed: null,
-          )
-        ],
-      ),
-      body: Center(
-        child: Text('Hello World'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Add',
-        child: IconButton(
-            icon: Icon(Icons.add),
-            onPressed: null
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, '/second');
-        }
-      ),
-    );
-  }
-}
+
 
 void main() {
   runApp(MaterialApp(
     title: 'Material',
 
-    initialRoute: '/',
-    routes: {
-      '/' : (context) => MaterialAppBar(),
-      '/second': (context) => MyScaffold(),
-    },
-//    home: MyScaffold(),
+//    initialRoute: '/',
+//    routes: {
+//      '/' : (context) => MaterialAppBar(),
+//      '/second': (context) => MyScaffold(),
+//    },
+    home: MyButton(),
   ));
 }
