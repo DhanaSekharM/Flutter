@@ -91,6 +91,12 @@ class _ShoppingListState extends State<ShoppingList> {
     });
   }
 
+  void _handleClearThemAll() {
+    setState(() {
+      widget.products.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,34 +114,46 @@ class _ShoppingListState extends State<ShoppingList> {
           );
         }).toList(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
 //          _handleAddItem(Product(name: 'item'));
-        showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: Text('Enter a new item'),
-            content: TextField(
-              controller: _textController,
-              onSubmitted: (String input){
-                newItem = input;
+              showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: Text('Enter a new item'),
+                    content: TextField(
+                      controller: _textController,
+                      onSubmitted: (String input){
+                        newItem = input;
 //                _handleAddItem(Product(name: input));
-              },
-            ),
+                      },
+                    ),
 
-            actions: <Widget>[
-              FlatButton(
-                onPressed:() {
-                  _handleAddItem(Product(name: newItem));
-                  Navigator.of(context).pop();
-                },
-                child: Text('Add'),
-              )
-            ],
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed:() {
+                          _handleAddItem(Product(name: newItem));
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Add'),
+                      )
+                    ],
+                  )
+              );
+            },
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.clear),
+            onPressed: () {
+              _handleClearThemAll();
+            },
           )
-        );
-        },
-      ),
+        ],
+      )
     );
   }
 }
