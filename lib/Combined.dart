@@ -6,13 +6,15 @@ class Product {
 }
 
 typedef void CartChangedCallback(Product product, bool inCart);
+typedef void ItemAddedCallback(Product product);
 
 class ShoppingListItem extends StatelessWidget {
 
-  ShoppingListItem({this.product, this.inCart, this.onCartChanged});
+  ShoppingListItem({this.product, this.inCart, this.onCartChanged, this.onItemAdded});
   final bool inCart;
   final Product product;
   final CartChangedCallback onCartChanged;
+  final ItemAddedCallback onItemAdded;
 
   Color _getColor(BuildContext context) {
     // The theme depends on the BuildContext because different parts of the tree
@@ -66,6 +68,8 @@ class ShoppingList extends StatefulWidget {
 
 class _ShoppingListState extends State<ShoppingList> {
   Set<Product> _shoppingCart = Set<Product>();
+  final _textController  = TextEditingController();
+  String newItem;
 
   void _handleCartChanged(Product product, bool inCart) {
     setState(() {
@@ -78,6 +82,12 @@ class _ShoppingListState extends State<ShoppingList> {
         _shoppingCart.add(product);
       else
         _shoppingCart.remove(product);
+    });
+  }
+
+  void _handleAddItem(Product product) {
+    setState(() {
+      widget.products.add(product);
     });
   }
 
@@ -94,8 +104,37 @@ class _ShoppingListState extends State<ShoppingList> {
             product: product,
             inCart: _shoppingCart.contains(product),
             onCartChanged: _handleCartChanged,
+            onItemAdded: _handleAddItem,
           );
         }).toList(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+//          _handleAddItem(Product(name: 'item'));
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: Text('Enter a new item'),
+            content: TextField(
+              controller: _textController,
+              onSubmitted: (String input){
+                newItem = input;
+//                _handleAddItem(Product(name: input));
+              },
+            ),
+
+            actions: <Widget>[
+              FlatButton(
+                onPressed:() {
+                  _handleAddItem(Product(name: newItem));
+                  Navigator.of(context).pop();
+                },
+                child: Text('Add'),
+              )
+            ],
+          )
+        );
+        },
       ),
     );
   }
