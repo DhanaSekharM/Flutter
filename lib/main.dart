@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'Button.dart';
+import 'Combined.dart';
 import 'MaterialAppBar.dart';
 import 'Stateful.dart';
 
@@ -66,15 +67,29 @@ class MyScaffold extends StatelessWidget {
 
 
 
+//void main() {
+//  runApp(MaterialApp(
+//    title: 'Material',
+//
+////    initialRoute: '/',
+////    routes: {
+////      '/' : (context) => MaterialAppBar(),
+////      '/second': (context) => MyScaffold(),
+////    },
+//    home: ShoppingListItem(),
+//  ));
+//}
+
+
 void main() {
   runApp(MaterialApp(
-    title: 'Material',
-
-//    initialRoute: '/',
-//    routes: {
-//      '/' : (context) => MaterialAppBar(),
-//      '/second': (context) => MyScaffold(),
-//    },
-    home: Counter(),
+    title: 'Shopping App',
+    home: ShoppingList(
+      products: <Product>[
+        Product(name: 'Eggs'),
+        Product(name: 'Flour'),
+        Product(name: 'Chocolate chips'),
+      ],
+    ),
   ));
 }
